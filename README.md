@@ -11,15 +11,70 @@ The binaries will be located in `/bin` for linux and `build/bin` for cross compi
 
 Run `make`.
 
-### Mac & windows Binaries
+### Mac & Windows Binaries
 
 Run `CROSS=1 make build`. 
 
-## Docker Image
+## Building Docker Image
+
+To build `rancher/hello-world`, run `make`.  To use a custom Docker repository, do `REPO=custom make`, which produces a `custom/hello-world` image.
+
+## Running Docker Image
+
+### Docker
 
 Run `docker run -td -p <PORT>:8080 rancher/hello-world`.
 
-To build `rancher/hello-world`, run `make`.  To use a custom Docker repository, do `REPO=custom make`, which produces a `custom/hello-world` image.
+### K8s
+
+Deployment manifest
+```
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  labels:
+    app: hello-world
+  name: hello-world
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+      - image: rancher/hello-world
+        imagePullPolicy: Always
+        name: hello-world
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world
+  namespace: default
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: hello-world
+```
+
+Run `kubectl apply -f <DEPLOY_MANIFEST>`
 
 ## Contact
 
