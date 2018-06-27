@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"strings"
 	"regexp"
+	"strings"
 )
 
 const (
@@ -64,39 +64,38 @@ const (
 	reqInfoID = "reqInfo"
 )
 
-
 func getServices() map[string]string {
-	k8s_services := make(map[string]string)
+	k8sServices := make(map[string]string)
 
 	for _, evar := range os.Environ() {
 		show := strings.Split(evar, "=")
 		regName := regexp.MustCompile("^.*_PORT$")
 		regLink := regexp.MustCompile("^(tcp|udp)://.*")
 		if regName.MatchString(show[0]) && regLink.MatchString(show[1]) {
-			k8s_services[strings.TrimSuffix(show[0], "_PORT")] = show[1]
+			k8sServices[strings.TrimSuffix(show[0], "_PORT")] = show[1]
 		}
 	}
 
-	return k8s_services
+	return k8sServices
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	hostname, _ := os.Hostname()
-	k8s_services := getServices()
+	k8sServices := getServices()
 
 	fmt.Fprintln(w, webHead)
 	fmt.Fprintln(w, "		<h3>My hostname is ", hostname, "</h3>")
-	k8s_number := len(k8s_services)
-	if k8s_number > 0 {
-		fmt.Fprintln(w, "		<h3>k8s services found,", k8s_number, "</h3>")
-		for k, v := range k8s_services {
+	k8sNumber := len(k8sServices)
+	if k8sNumber > 0 {
+		fmt.Fprintln(w, "		<h3>k8s services found,", k8sNumber, "</h3>")
+		for k, v := range k8sServices {
 			fmt.Fprintln(w, "		<b>", k, "</b> ", v, "<br />")
 		}
 	}
 	fmt.Fprintln(w, "		<br />")
 
 	fmt.Fprintln(w, "		<button class='button' onclick='myFunction()'>Show details</button>")
-	fmt.Fprintln(w, "		<div id='" + reqInfoID + "' style='display:none'>")
+	fmt.Fprintln(w, "		<div id='"+reqInfoID+"' style='display:none'>")
 	fmt.Fprintln(w, "			<h3>Request info</h3>")
 	fmt.Fprintln(w, "			<b>Host:</b> ", r.Host, "<br />")
 	fmt.Fprintln(w, "			<b>Pod:</b> ", hostname, "</b><br />")
@@ -110,13 +109,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	web_port := os.Getenv("WEB_PORT")
-	if web_port == "" {
-		web_port = "8080"
+	webPort := os.Getenv("WEB_PORT")
+	if webPort == "" {
+		webPort = "8080"
 	}
 
-	fmt.Println("Running web-test service at", web_port, "port")
+	fmt.Println("Running web-test service at", webPort, "port")
 	http.HandleFunc("/", handler)
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir(os.Getenv("PWD")))))
-	http.ListenAndServe(":" + web_port, nil)
+	http.ListenAndServe(":"+webPort, nil)
 }
