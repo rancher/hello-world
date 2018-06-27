@@ -72,6 +72,7 @@ if echo $TAG | grep -q dirty; then
 fi
 
 cp ../bin/hello-world .
+cp -rp ../img .
 docker build -t ${REPO}/hello-world:${TAG} .
 
 echo ${REPO}/hello-world:${TAG} > ../dist/images

@@ -1,43 +1,25 @@
-Rancher Hello-world
-===================
+Hello-world
+===========
 
 This image runs a web service in 8080 port, showing k8s services and request headers, used for testing. 
 
-## Build
-
-```
-docker build -t rancher/hello-world:<version> .
-```
-
-## Versions
-
-- `latest` [(Dockerfile)](https://github.com/rawmind0/web-test/blob/master/Dockerfile)
-
-
-## Usage
-
-```
-docker run rancher/hello-world:<version> 
-```
-
 ## Building from Source
 
-The binaries will be located in `/bin`.
+The binaries will be located in `/bin` for linux and `build/bin` for cross compiling.
 
 ### Linux Binary
 
 Run `make`.
 
-### Mac Binary
+### Mac & windows Binaries
 
-Run `CROSS=1 make build`.
+Run `CROSS=1 make build`. 
 
 ## Docker Image
 
-Run `docker run --rm -it -v <PATH_TO_CONFIG>:/root/.rancher/cli2.json rancher/cli [ARGS]`.
-Pass credentials by replacing `<PATH_TO_CONFIG>` with your config file for the server.
+Run `docker run -td -p <PORT>:8080 rancher/hello-world`.
 
-To build `rancher/cli`, run `make`.  To use a custom Docker repository, do `REPO=custom make`, which produces a `custom/cli` image.
+To build `rancher/hello-world`, run `make`.  To use a custom Docker repository, do `REPO=custom make`, which produces a `custom/hello-world` image.
 
 ## Contact
 
