@@ -47,7 +47,7 @@ const (
   {{ end }}`
 
 	webDetails = `    <button class='button' onclick='myFunction()'>Show request details</button>
-    <div id='reqInfo' style='display:none'>
+    <div id="` + reqInfoID + `" style='display:none'>
       <h3>Request info</h3>
       <b>Host:</b> {{.Host}} <br />
       <b>Pod:</b> {{.Hostname}} </b><br />

@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+const defaultListenPort = "80"
+
 type HelloWorldConfig struct {
 	Hostname string
 	Services map[string]string
@@ -54,12 +56,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	webPort := os.Getenv("WEB_PORT")
+	webPort := os.Getenv("HTTP_PORT")
 	if webPort == "" {
-		webPort = "8080"
+		webPort = defaultListenPort
 	}
 
-	fmt.Println("Running web-test service at", webPort, "port")
+	fmt.Println("Running http service at", webPort, "port")
 	http.HandleFunc("/", handler)
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir(os.Getenv("PWD")))))
 	http.ListenAndServe(":"+webPort, nil)

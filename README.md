@@ -1,7 +1,7 @@
 Hello world
 ===========
 
-This image runs hello-world web service in 8080 port, showing k8s services and request headers, used for demoing and/or testing. 
+This image runs hello-world web service in 80 port used for demoing and/or testing. It shows data about hostname, k8s services and request headers. 
 
 ## Building from Source
 
@@ -23,7 +23,7 @@ To build `rancher/hello-world`, run `make`.  To use a custom Docker repository, 
 
 ### Docker
 
-Run `docker run -td -p <PORT>:8080 rancher/hello-world`.
+Run `docker run -td -p <PORT>:80 rancher/hello-world`.
 
 ### K8s
 
@@ -56,7 +56,7 @@ spec:
         imagePullPolicy: Always
         name: hello-world
         ports:
-        - containerPort: 8080
+        - containerPort: 80
           protocol: TCP
       restartPolicy: Always
 ---
@@ -67,9 +67,9 @@ metadata:
   namespace: default
 spec:
   ports:
-  - port: 8080
+  - port: 80
     protocol: TCP
-    targetPort: 8080
+    targetPort: 80
   selector:
     app: hello-world
 ```
@@ -79,9 +79,9 @@ Run `kubectl apply -f <DEPLOY_MANIFEST>`
 ## Contact
 
 For bugs, questions, comments, corrections, suggestions, etc., open an issue in
-[rancher/rancher](//github.com/rancher/rancher/issues) with a title prefix of `[cli] `.
+[rancher/rancher](//github.com/rancher/rancher/issues) with a title prefix of `[hello-world] `.
 
-Or just [click here](//github.com/rancher/rancher/issues/new?title=%5Bcli%5D%20) to create a new issue.
+Or just [click here](//github.com/rancher/rancher/issues/new?title=%5Bhello-world%5D%20) to create a new issue.
 
 ## License
 Copyright (c) 2014-2018 [Rancher Labs, Inc.](http://rancher.com)
