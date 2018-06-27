@@ -1,7 +1,7 @@
-Hello-world
+Hello world
 ===========
 
-This image runs a web service in 8080 port, showing k8s services and request headers, used for testing. 
+This image runs hello-world web service in 8080 port, showing k8s services and request headers, used for demoing and/or testing. 
 
 ## Building from Source
 

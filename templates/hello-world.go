@@ -40,7 +40,7 @@ const (
     <div id='Services'>
       <h3>k8s services found {{$length}}</h3>
     {{ range $k,$v := .Services }}
-      <b>{{ $k }}</b>{{ $v }}<br />
+      <b>{{ $k }}</b> {{ $v }}<br />
     {{ end }}
     </div>
     <br />
@@ -52,7 +52,7 @@ const (
       <b>Host:</b> {{.Host}} <br />
       <b>Pod:</b> {{.Hostname}} </b><br />
     {{ range $k,$v := .Headers }}
-      <b>{{ $k }}</b>{{ $v }}<br />
+      <b>{{ $k }}:</b> {{ $v }}<br />
     {{ end }}
     </div>
     <br />`
