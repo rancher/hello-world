@@ -22,7 +22,9 @@ pipeline:
     dockerfile: package/Dockerfile
     repo: rancher/hello-world
     context: package/
-    tag: [${DRONE_TAG}, latest]
+    tag: 
+    - ${DRONE_TAG}
+    - latest
     secrets: [docker_username, docker_password]
     build_args:
     - VERSION=${DRONE_TAG}
