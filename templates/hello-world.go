@@ -33,7 +33,8 @@ const (
   <body>
     <img id="logo" src="img/rancher-logo.svg" alt="Rancher logo" width=400 />
     <h1>Hello world!</h1>
-    <h3>My hostname is {{.Hostname}}</h3>`
+    <h3>My hostname is {{.Hostname}}</h3>
+    <h3>Time: {{.Datetime}} UTC</h3>`
 
 	webServices = `{{- $length := len .Services }} 
   {{- if gt $length 0 }}

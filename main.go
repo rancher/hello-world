@@ -2,11 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/rancher/hello-world/templates"
 	"net/http"
 	"os"
 	"regexp"
 	"strings"
+	"time"
+
+	"github.com/rancher/hello-world/templates"
 )
 
 const defaultListenPort = "80"
@@ -14,6 +16,7 @@ const defaultListenPort = "80"
 type HelloWorldConfig struct {
 	Hostname string
 	Services map[string]string
+	Datetime string
 	Headers  http.Header
 	Host     string
 }
@@ -41,6 +44,7 @@ func (config *HelloWorldConfig) Init(r *http.Request) {
 	config.Hostname, _ = os.Hostname()
 	config.Host = r.Host
 	config.Headers = r.Header
+	config.Datetime = time.Now().Format("15:04:05.000")
 	config.getServices()
 }
 
