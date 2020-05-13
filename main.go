@@ -51,7 +51,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprintln(w, err)
 	}
-
+	w.Header().Set("X-Hostname", config.Hostname)
 	fmt.Fprint(w, data)
 }
 
